@@ -19,17 +19,12 @@
 	},
 	"portletInstance": {
 		"fields": {
-			"drink": {
+			"endpointService": {
 				"type": "string",
-				"name": "drink",
-				"description": "drink-help",
-				"default": "water",
-				"options": {
-					"water": "water",
-					"wine": "wine",
-					"beer": "beer"
-				}
-			}
+				"name": "endpointURL",
+				"description": "url",
+				"default": "https://free-to-play-games-database.p.rapidapi.com/api/games"
+			}	
 		}
 	}
 }
