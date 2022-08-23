@@ -10,3 +10,8 @@
 	font-family: monospace; white-space: pre;
 }
 
+.box-data{
+	border: 1px solid #F0EEED;
+	padding: 2rem;
+	justify-content: center;
+}

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Plataforma from '../components/plataforma';
 
 const test = (props) => {
 
     const { endpoint } = props;
 
     const [showLoader, setShowLoader] = useState(false);
-    const [games, setGames] = useState([]);
-    const [texto, setTexto] = useState("");
+    const [data, setData] = useState([]);
 
     useEffect(() => {
         getData();
@@ -16,77 +14,56 @@ const test = (props) => {
     const getData = async () => {
         setShowLoader(true);
         try {
-
-            const options = {
-                method: 'GET',
-                headers: {
-                    'X-RapidAPI-Key': '6c11314079msh55ef69e7aff5242p173d6djsn1817dfc9659c',
-                    'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
-                }
-            };
-            
-            await fetch(endpoint, options)
+            await fetch("https://run.mocky.io/v3/2e3dd2f2-f20a-4aa0-adb7-954101b1b7e0")
                 .then(response => response.json())
-                .then(response => {
-                    setGames(response);
+                .then(result => {
+                    setData(result.productos);
                     setShowLoader(false);
                 })
-                .catch(err => console.error(err));
-
-            
+                .catch(error => console.log('error', error));
 
         } catch (error) {
             console.error(error);
         }
     };
 
-  return (
-    <>
+    return (
+        <>
 
-        <div className="d-flex justify-content-between col-12 align-items-center my-5">
-            <h1 className="d-flex">Juegos { texto != "" ? <p className="ml-2"> de {texto} </p> : "" }</h1>
-            
-            <div>
-                <label>Plataforma</label>
-                <Plataforma 
-                    games={setGames} 
-                    loader={setShowLoader} 
-                    texto={setTexto}
-                />
+            <div className="d-flex justify-content-between col-12 align-items-center my-5">
+                <h1 className="d-flex">Productos</h1>
             </div>
-        </div>
 
-        {showLoader ? 
-        (
-            <>
-                <p className="text-center">Cargando...</p>
-            </>
-        ) : 
-        (
-           <>
+            {showLoader ?
+                (
+                    <>
+                        <p className="text-center">Cargando...</p>
+                    </>
+                ) :
+                (
+                    <>
 
-            <div className="d-flex flex-wrap">
-                
-                {
-                    
-                    games.map((values, index) => (
+                        <div className="d-flex flex-wrap">
 
-                        <div key={index} className="col-4 d-flex flex-wrap">
-                            <img className="w-100" src={values.thumbnail} />
-                            <p className="w-100 text-center">{values.title}</p>
+                            {
+                                
+                                data.map((values, index) => (
+                                    <div key={index} className="col-4 d-flex flex-wrap text-center box-data">
+                                        <img src={values.imagen} alt={values.producto} className="mb-5"/>
+                                        <h1 className="w-100">{values.producto}</h1>
+                                        <p className="w-100 ">{values.descripcion}</p>
+                                    </div>
+                                ))
+                            }
+
                         </div>
-             
-                    ))
-                }
 
-            </div>
+                    </>
 
-           </>
-          
-        )}
-        
-    </>
-  )
+                )}
+
+        </>
+    )
 }
 
 export default test;
